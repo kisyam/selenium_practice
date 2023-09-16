@@ -31,6 +31,7 @@ try:
 except Exception:
     print("불러오지 못했습니다.")
 
+search_results.pop()
 
 # * "MjjYud" class 내에서 <h3> 추출
 for search_result in search_results:
