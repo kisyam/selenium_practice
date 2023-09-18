@@ -39,7 +39,7 @@ class GoogleKeywordScreenshooter:
             self.browser.execute_script(
                 "window.scrollTo(0, document.body.scrollHeight);"
             )
-            time.sleep(2)
+            time.sleep(3)
 
         # * shitty_element 없을 경우가 있어서 예외처리를 해줘야 함.
         try:
@@ -57,13 +57,15 @@ class GoogleKeywordScreenshooter:
         except Exception:
             pass
 
-        # * 20s(페이지를 다 로딩할 때까지의 시간이 필요하다.) => 그래야 class_name을 찾는다. ✅
+        # * 10s(페이지를 다 로딩할 때까지의 시간이 필요하다.) => 그래야 class_name을 찾는다. ✅
         search_results = WebDriverWait(self.browser, 10).until(
             EC.presence_of_all_elements_located((By.CLASS_NAME, self.class_name))
         )
         print(f"총 결과값은 {len(search_results)}개 입니다.")
 
-        # * enumerate func : index 값도 가져와준다.
+        self.browser.execute_script("window.scrollTo(0, 0);")
+
+        # * enumerate class : index 값도 가져와준다.
         for index, search_result in enumerate(search_results):
             search_result.screenshot(
                 f"{self.screenshots_dir}/{self.keyword}x{index}.png"
@@ -81,7 +83,7 @@ class GoogleKeywordScreenshooter:
         # print(search_results)
 
 
-flutter_search = GoogleKeywordScreenshooter("flutter", "screenshots", "asEBEc", 3)
+flutter_search = GoogleKeywordScreenshooter("dart", "screenshots", "asEBEc", 3)
 flutter_search.start()
 flutter_search.take_screenshot()
-flutter_search.finish()
+# flutter_search.finish()
